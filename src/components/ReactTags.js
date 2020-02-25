@@ -54,6 +54,7 @@ class ReactTags extends Component {
     removeComponent: PropTypes.func,
     autocomplete: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
     readOnly: PropTypes.bool,
+    tagsOnly: PropTypes.bool,
     classNames: PropTypes.object,
     name: PropTypes.string,
     id: PropTypes.string,
@@ -84,6 +85,7 @@ class ReactTags extends Component {
     resetInputOnDelete: true,
     autocomplete: false,
     readOnly: false,
+    tagsOnly: false,
     allowUnique: true,
     allowDragDrop: true,
     tags: [],
@@ -121,7 +123,6 @@ class ReactTags extends Component {
 
   componentDidMount() {
     const { autofocus, readOnly } = this.props;
-    
     if (autofocus && !readOnly) {
       this.resetAndFocusInput();
     }
@@ -425,7 +426,7 @@ class ReactTags extends Component {
       ? INPUT_FIELD_POSITIONS.BOTTOM
       : inputFieldPosition;
 
-    const tagInput = !this.props.readOnly ? (
+    const tagInput = !this.props.readOnly && !this.props.tagsOnly ? (
       <div className={classNames.tagInput}>
         <input
           ref={(input) => {
